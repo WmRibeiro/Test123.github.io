@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Checklist Simples</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      display: flex;
+      align-items: center;
+      margin: 8px 0;
+    }
+    input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    .done {
+      text-decoration: line-through;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Checklist</h2>
+    <ul id="checklist">
+      <li><input type="checkbox"> Tarefa 1</li>
+      <li><input type="checkbox"> Tarefa 2</li>
+      <li><input type="checkbox"> Tarefa 3</li>
+    </ul>
+  </div>
+
+  <script>
+    const checklist = document.getElementById("checklist");
+
+    checklist.addEventListener("change", function(e) {
+      if (e.target.tagName === "INPUT" && e.target.type === "checkbox") {
+        const item = e.target.parentElement;
+        if (e.target.checked) {
+          item.classList.add("done");
+        } else {
+          item.classList.remove("done");
+        }
+      }
+    });
+  </script>
+</body>
+</html>
