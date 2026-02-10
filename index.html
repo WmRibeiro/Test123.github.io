@@ -1,173 +1,282 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Checklist - Empilhadeira</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f9;
-      margin: 0;
-      padding: 10px;
-    }
-    .container {
-      background: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      max-width: 700px;
-      margin: auto;
-    }
-    h2 {
-      text-align: center;
-      font-size: 1.4em;
-    }
-    label {
-      font-weight: bold;
-      margin-top: 10px;
-      display: block;
-    }
-    select, input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      font-size: 1em;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    input[type="file"] {
-      padding: 5px;
-    }
-    .datetime {
-      margin-top: 10px;
-      font-style: italic;
-      color: #555;
-    }
-    button {
-      margin-top: 20px;
-      padding: 12px;
-      width: 100%;
-      background: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1em;
-    }
-    button:hover {
-      background: #45a049;
-    }
-    @media (max-width: 600px) {
-      .container {
-        padding: 10px;
-      }
-      h2 {
-        font-size: 1.2em;
-      }
-      select, input, textarea, button {
-        font-size: 0.9em;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Checklist de Empilhadeira</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+:root {
+  --primary:#2563eb;
+  --danger:#ef4444;
+  --success:#22c55e;
+  --bg:#f1f5f9;
+  --card:#ffffff;
+  --border:#e2e8f0;
+}
+
+* { box-sizing:border-box }
+
+body {
+  font-family: system-ui, Arial;
+  background: linear-gradient(135deg,#e0e7ff,#f8fafc);
+  padding:16px;
+}
+
+.container {
+  max-width:720px;
+  margin:auto;
+  background:var(--card);
+  padding:24px;
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+h2 {
+  text-align:center;
+  color:#1e40af;
+}
+
+.card {
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px;
+  margin-top:20px;
+  background:#f8fafc;
+}
+
+.card h3 {
+  margin:0 0 10px;
+  color:#1e40af;
+}
+
+label {
+  font-weight:600;
+  margin-top:12px;
+  display:block;
+}
+
+input, select, textarea {
+  width:100%;
+  padding:12px;
+  margin-top:5px;
+  border-radius:10px;
+  border:1px solid var(--border);
+}
+
+textarea { min-height:70px }
+
+.select-ok {
+  border-color:var(--success);
+  background:#f0fdf4;
+}
+
+.select-erro {
+  border-color:var(--danger);
+  background:#fef2f2;
+}
+
+.foto-obrigatoria {
+  border-left:4px solid var(--primary);
+  padding-left:10px;
+}
+
+canvas {
+  border:2px dashed #94a3b8;
+  border-radius:10px;
+  background:#fff;
+  margin-top:8px;
+  touch-action:none;
+}
+
+button {
+  margin-top:25px;
+  width:100%;
+  padding:14px;
+  font-size:1rem;
+  font-weight:600;
+  color:#fff;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg,#2563eb,#1e40af);
+  cursor:pointer;
+}
+</style>
 </head>
+
 <body>
-  <div class="container">
-    <h2>Checklist - Empilhadeira</h2>
+<div class="container">
+<h2>Checklist de Empilhadeira</h2>
 
-    <label>Nome do Colaborador:</label>
-    <input type="text" id="colaborador">
+<label>Colaborador</label>
+<input id="colaborador">
 
-    <label>Matrícula:</label>
-    <input type="text" id="matricula">
+<label>Matrícula</label>
+<input id="matricula">
 
-    <div class="datetime" id="dataHora"></div>
+<div id="dataHora"></div>
 
-    <!-- Exemplo de item com captura de foto -->
-    <label>Estado geral dos pneus:</label>
-    <select id="pneus">
-      <option>Bom</option><option>Regular</option><option>Ruim</option>
-    </select>
-    <input type="file" id="fotoPneus" accept="image/*" capture="camera">
+<!-- CARD SEGURANÇA -->
+<div class="card">
+<h3>🔧 Segurança</h3>
 
-    <label>Funcionamento da buzina:</label>
-    <select id="buzina"><option>Funcionando</option><option>Não Funcionando</option></select>
-    <input type="file" id="fotoBuzina" accept="image/*" capture="camera">
+<label>Buzina</label>
+<select id="buzina" class="avaliacao">
+  <option>Funcionando</option>
+  <option>Não Funcionando</option>
+</select>
+<input type="file" id="fotoBuzina" class="foto-obrigatoria" accept="image/*" capture="camera">
+</div>
 
-    <label>Sistema de elevação:</label>
-    <select id="elevacao"><option>Funcionando</option><option>Não Funcionando</option></select>
-    <input type="file" id="fotoElevacao" accept="image/*" capture="camera">
+<!-- CARD ESTRUTURA -->
+<div class="card">
+<h3>🚜 Estrutura</h3>
 
-    <label>Sistema de freios:</label>
-    <select id="freios"><option>Ok</option><option>Não</option></select>
-    <input type="file" id="fotoFreios" accept="image/*" capture="camera">
+<label>Pneus</label>
+<select id="pneus" class="avaliacao">
+  <option>Bom</option>
+  <option>Regular</option>
+  <option>Ruim</option>
+</select>
+<input type="file" id="fotoPneus" class="foto-obrigatoria" accept="image/*" capture="camera">
+</div>
 
-    <label>Direção hidráulica:</label>
-    <select id="direcao"><option>Ok</option><option>Não</option></select>
-    <input type="file" id="fotoDirecao" accept="image/*" capture="camera">
+<!-- CARD ASSINATURA -->
+<div class="card">
+<h3>🧾 Assinatura do Operador</h3>
+<canvas id="assinatura" width="300" height="120"></canvas>
+<button type="button" onclick="limparAssinatura()">Limpar assinatura</button>
+</div>
 
-    <label>Nível de fluido (Freios):</label>
-    <select id="fluido"><option>Cheio</option><option>Vazio</option></select>
-    <input type="file" id="fotoFluido" accept="image/*" capture="camera">
+<button onclick="gerarPDF()">Gerar PDF</button>
+</div>
 
-    <label>Garfo:</label>
-    <select id="garfo"><option>Ok</option><option>Não</option></select>
-    <input type="file" id="fotoGarfo" accept="image/*" capture="camera">
+<script>
+document.getElementById("dataHora").innerText =
+"Data/Hora: " + new Date().toLocaleString();
 
-    <label>Limpeza:</label>
-    <select id="limpeza"><option>Realizada</option><option>Não Realizada</option></select>
-    <textarea id="obsLimpeza" placeholder="Observações"></textarea>
-    <input type="file" id="fotoLimpeza" accept="image/*" capture="camera">
-
-    <label>Existe algum vazamento:</label>
-    <select id="vazamento"><option>Não</option><option>Sim</option></select>
-    <textarea id="tipoVazamento" placeholder="Qual vazamento?"></textarea>
-    <input type="file" id="fotoVazamento" accept="image/*" capture="camera">
-
-    <label>Sistemas de ré, lanternas e retrovisores:</label>
-    <select id="sistemas"><option>Sim</option><option>Não</option></select>
-    <input type="file" id="fotoSistemas" accept="image/*" capture="camera">
-
-    <label>Cilindro de gás:</label>
-    <select id="gas"><option>Ok</option><option>Não</option></select>
-    <input type="file" id="fotoGas" accept="image/*" capture="camera">
-
-    <button onclick="gerarPDF()">Gerar PDF</button>
-  </div>
-
-  <script>
-    // Data e hora automáticas
-    document.getElementById("dataHora").innerText = 
-      "Data/Hora: " + new Date().toLocaleString();
-
-    // Função para gerar PDF
-    function gerarPDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-
-      doc.text("Checklist - Empilhadeira", 10, 10);
-      doc.text("Colaborador: " + document.getElementById("colaborador").value, 10, 20);
-      doc.text("Matrícula: " + document.getElementById("matricula").value, 10, 30);
-      doc.text(document.getElementById("dataHora").innerText, 10, 40);
-
-      // Exemplo de coleta de dados
-      doc.text("Pneus: " + document.getElementById("pneus").value, 10, 50);
-      doc.text("Buzina: " + document.getElementById("buzina").value, 10, 60);
-      doc.text("Elevação: " + document.getElementById("elevacao").value, 10, 70);
-      doc.text("Freios: " + document.getElementById("freios").value, 10, 80);
-      doc.text("Direção: " + document.getElementById("direcao").value, 10, 90);
-      doc.text("Fluido: " + document.getElementById("fluido").value, 10, 100);
-      doc.text("Garfo: " + document.getElementById("garfo").value, 10, 110);
-      doc.text("Limpeza: " + document.getElementById("limpeza").value, 10, 120);
-      doc.text("Obs Limpeza: " + document.getElementById("obsLimpeza").value, 10, 130);
-      doc.text("Vazamento: " + document.getElementById("vazamento").value, 10, 140);
-      doc.text("Tipo Vazamento: " + document.getElementById("tipoVazamento").value, 10, 150);
-      doc.text("Sistemas: " + document.getElementById("sistemas").value, 10, 160);
-      doc.text("Cilindro de gás: " + document.getElementById("gas").value, 10, 170);
-
-      doc.save("checklist_empilhadeira.pdf");
+/* CORES AUTOMÁTICAS */
+document.querySelectorAll(".avaliacao").forEach(sel=>{
+  sel.addEventListener("change",()=>{
+    sel.classList.remove("select-ok","select-erro");
+    if(sel.value.includes("Não")||sel.value.includes("Ruim")){
+      sel.classList.add("select-erro");
+    } else {
+      sel.classList.add("select-ok");
     }
-  </script>
+  });
+});
+
+/* ASSINATURA */
+const canvas=document.getElementById("assinatura");
+const ctx=canvas.getContext("2d");
+let draw=false;
+
+function pos(e){
+  const r=canvas.getBoundingClientRect();
+  return {
+    x:(e.touches?e.touches[0].clientX:e.clientX)-r.left,
+    y:(e.touches?e.touches[0].clientY:e.clientY)-r.top
+  };
+}
+
+canvas.onmousedown=()=>draw=true;
+canvas.onmouseup=()=>draw=false;
+canvas.onmousemove=e=>{
+  if(!draw)return;
+  const p=pos(e);
+  ctx.lineTo(p.x,p.y);
+  ctx.stroke();
+};
+canvas.ontouchstart=()=>draw=true;
+canvas.ontouchend=()=>draw=false;
+canvas.ontouchmove=e=>{
+  e.preventDefault();
+  if(!draw)return;
+  const p=pos(e);
+  ctx.lineTo(p.x,p.y);
+  ctx.stroke();
+};
+ctx.lineWidth=2;
+ctx.lineCap="round";
+
+function limparAssinatura(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+
+/* VALIDAÇÃO */
+function validar(){
+  let ok=true;
+  document.querySelectorAll(".avaliacao").forEach(sel=>{
+    const foto=sel.nextElementSibling;
+    if((sel.value.includes("Não")||sel.value.includes("Ruim")) && foto.files.length===0){
+      ok=false;
+    }
+  });
+  if(!ok) alert("Itens com problema exigem foto!");
+  return ok;
+}
+
+/* PDF */
+async function gerarPDF(){
+  if(!validar()) return;
+
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF();
+  let y=15;
+
+  doc.setFontSize(16);
+  doc.text("Checklist de Empilhadeira",105,y,{align:"center"});
+  y+=10;
+
+  doc.setFontSize(10);
+  doc.text("Colaborador: "+colaborador.value,10,y);
+  doc.text("Matrícula: "+matricula.value,140,y);
+  y+=6;
+  doc.text(dataHora.innerText,10,y);
+  y+=10;
+
+  async function item(nome,selectId,fotoId){
+    doc.text(nome+": "+document.getElementById(selectId).value,10,y);
+    y+=5;
+    const file=document.getElementById(fotoId).files[0];
+    if(file){
+      const img=await new Promise(r=>{
+        const fr=new FileReader();
+        fr.onload=e=>r(e.target.result);
+        fr.readAsDataURL(file);
+      });
+      doc.addImage(img,"JPEG",10,y,50,35);
+      y+=40;
+    }
+  }
+
+  await item("Buzina","buzina","fotoBuzina");
+  await item("Pneus","pneus","fotoPneus");
+
+  doc.text("Assinatura:",10,y);
+  y+=5;
+  doc.addImage(canvas.toDataURL(),"PNG",10,y,60,25);
+
+  salvarHistorico();
+  doc.save("checklist_empilhadeira.pdf");
+  enviarWhats();
+}
+
+/* HISTÓRICO */
+function salvarHistorico(){
+  const h=JSON.parse(localStorage.getItem("checklists")||"[]");
+  h.push({colaborador:colaborador.value,data:new Date().toLocaleString()});
+  localStorage.setItem("checklists",JSON.stringify(h));
+}
+
+/* WHATSAPP */
+function enviarWhats(){
+  const msg=encodeURIComponent("Checklist realizado por "+colaborador.value);
+  window.open("https://wa.me/?text="+msg,"_blank");
+}
+</script>
 </body>
 </html>
