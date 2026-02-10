@@ -8,57 +8,50 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-:root {
+:root{
   --primary:#2563eb;
   --danger:#ef4444;
   --success:#22c55e;
-  --bg:#f1f5f9;
-  --card:#ffffff;
   --border:#e2e8f0;
+  --bg:#f1f5f9;
 }
 
-* { box-sizing:border-box }
+*{box-sizing:border-box}
 
-body {
-  font-family: system-ui, Arial;
-  background: linear-gradient(135deg,#e0e7ff,#f8fafc);
+body{
+  font-family:system-ui,Arial;
+  background:linear-gradient(135deg,#e0e7ff,#f8fafc);
   padding:16px;
 }
 
-.container {
-  max-width:720px;
+.container{
+  max-width:760px;
   margin:auto;
-  background:var(--card);
+  background:#fff;
   padding:24px;
   border-radius:14px;
   box-shadow:0 10px 30px rgba(0,0,0,.08);
 }
 
-h2 {
-  text-align:center;
-  color:#1e40af;
-}
+h2{text-align:center;color:#1e40af}
 
-.card {
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:18px;
+.card{
   margin-top:20px;
+  padding:18px;
+  border-radius:14px;
+  border:1px solid var(--border);
   background:#f8fafc;
 }
 
-.card h3 {
-  margin:0 0 10px;
-  color:#1e40af;
-}
+.card h3{margin:0 0 12px;color:#1e40af}
 
-label {
+label{
   font-weight:600;
-  margin-top:12px;
+  margin-top:10px;
   display:block;
 }
 
-input, select, textarea {
+input,select,textarea{
   width:100%;
   padding:12px;
   margin-top:5px;
@@ -66,24 +59,17 @@ input, select, textarea {
   border:1px solid var(--border);
 }
 
-textarea { min-height:70px }
+textarea{min-height:70px}
 
-.select-ok {
-  border-color:var(--success);
-  background:#f0fdf4;
-}
+.select-ok{background:#f0fdf4;border-color:var(--success)}
+.select-erro{background:#fef2f2;border-color:var(--danger)}
 
-.select-erro {
-  border-color:var(--danger);
-  background:#fef2f2;
-}
-
-.foto-obrigatoria {
+.foto-obrigatoria{
   border-left:4px solid var(--primary);
   padding-left:10px;
 }
 
-canvas {
+canvas{
   border:2px dashed #94a3b8;
   border-radius:10px;
   background:#fff;
@@ -91,8 +77,8 @@ canvas {
   touch-action:none;
 }
 
-button {
-  margin-top:25px;
+button{
+  margin-top:26px;
   width:100%;
   padding:14px;
   font-size:1rem;
@@ -108,9 +94,9 @@ button {
 
 <body>
 <div class="container">
-<h2>Checklist de Empilhadeira</h2>
+<h2>Checklist – Empilhadeira</h2>
 
-<label>Colaborador</label>
+<label>Nome do Colaborador</label>
 <input id="colaborador">
 
 <label>Matrícula</label>
@@ -118,35 +104,120 @@ button {
 
 <div id="dataHora"></div>
 
-<!-- CARD SEGURANÇA -->
+<!-- SEGURANÇA -->
 <div class="card">
 <h3>🔧 Segurança</h3>
 
 <label>Buzina</label>
 <select id="buzina" class="avaliacao">
-  <option>Funcionando</option>
-  <option>Não Funcionando</option>
+<option>Funcionando</option>
+<option>Não Funcionando</option>
 </select>
 <input type="file" id="fotoBuzina" class="foto-obrigatoria" accept="image/*" capture="camera">
+
+<label>Sistemas de ré, lanternas e retrovisores</label>
+<select id="sistemas" class="avaliacao">
+<option>Sim</option>
+<option>Não</option>
+</select>
+<input type="file" id="fotoSistemas" class="foto-obrigatoria" accept="image/*" capture="camera">
 </div>
 
-<!-- CARD ESTRUTURA -->
+<!-- ESTRUTURA -->
 <div class="card">
 <h3>🚜 Estrutura</h3>
 
 <label>Pneus</label>
 <select id="pneus" class="avaliacao">
-  <option>Bom</option>
-  <option>Regular</option>
-  <option>Ruim</option>
+<option>Bom</option>
+<option>Regular</option>
+<option>Ruim</option>
 </select>
 <input type="file" id="fotoPneus" class="foto-obrigatoria" accept="image/*" capture="camera">
+
+<label>Garfo</label>
+<select id="garfo" class="avaliacao">
+<option>Ok</option>
+<option>Não</option>
+</select>
+<input type="file" id="fotoGarfo" class="foto-obrigatoria" accept="image/*" capture="camera">
+
+<label>Sistema de elevação</label>
+<select id="elevacao" class="avaliacao">
+<option>Funcionando</option>
+<option>Não Funcionando</option>
+</select>
+<input type="file" id="fotoElevacao" class="foto-obrigatoria" accept="image/*" capture="camera">
+
+<label>Direção hidráulica</label>
+<select id="direcao" class="avaliacao">
+<option>Ok</option>
+<option>Não</option>
+</select>
+<input type="file" id="fotoDirecao" class="foto-obrigatoria" accept="image/*" capture="camera">
 </div>
 
-<!-- CARD ASSINATURA -->
+<!-- FREIOS / FLUIDOS -->
+<div class="card">
+<h3>🛢️ Freios e Fluidos</h3>
+
+<label>Sistema de freios</label>
+<select id="freios" class="avaliacao">
+<option>Ok</option>
+<option>Não</option>
+</select>
+<input type="file" id="fotoFreios" class="foto-obrigatoria" accept="image/*" capture="camera">
+
+<label>Nível de fluido (freios)</label>
+<select id="fluido" class="avaliacao">
+<option>Cheio</option>
+<option>Vazio</option>
+</select>
+<input type="file" id="fotoFluido" class="foto-obrigatoria" accept="image/*" capture="camera">
+</div>
+
+<!-- VAZAMENTO -->
+<div class="card">
+<h3>💧 Vazamentos</h3>
+
+<label>Existe algum vazamento?</label>
+<select id="vazamento" class="avaliacao">
+<option>Não</option>
+<option>Sim</option>
+</select>
+<textarea id="tipoVazamento" placeholder="Qual vazamento?"></textarea>
+<input type="file" id="fotoVazamento" class="foto-obrigatoria" accept="image/*" capture="camera">
+</div>
+
+<!-- LIMPEZA -->
+<div class="card">
+<h3>🧼 Limpeza</h3>
+
+<label>Limpeza</label>
+<select id="limpeza" class="avaliacao">
+<option>Realizada</option>
+<option>Não Realizada</option>
+</select>
+<textarea id="obsLimpeza" placeholder="Observações"></textarea>
+<input type="file" id="fotoLimpeza" class="foto-obrigatoria" accept="image/*" capture="camera">
+</div>
+
+<!-- GÁS -->
+<div class="card">
+<h3>🔥 Cilindro de Gás</h3>
+
+<label>Cilindro de gás</label>
+<select id="gas" class="avaliacao">
+<option>Ok</option>
+<option>Não</option>
+</select>
+<input type="file" id="fotoGas" class="foto-obrigatoria" accept="image/*" capture="camera">
+</div>
+
+<!-- ASSINATURA -->
 <div class="card">
 <h3>🧾 Assinatura do Operador</h3>
-<canvas id="assinatura" width="300" height="120"></canvas>
+<canvas id="assinatura" width="320" height="120"></canvas>
 <button type="button" onclick="limparAssinatura()">Limpar assinatura</button>
 </div>
 
@@ -154,75 +225,61 @@ button {
 </div>
 
 <script>
-document.getElementById("dataHora").innerText =
-"Data/Hora: " + new Date().toLocaleString();
+dataHora.innerText="Data/Hora: "+new Date().toLocaleString();
 
 /* CORES AUTOMÁTICAS */
-document.querySelectorAll(".avaliacao").forEach(sel=>{
-  sel.addEventListener("change",()=>{
-    sel.classList.remove("select-ok","select-erro");
-    if(sel.value.includes("Não")||sel.value.includes("Ruim")){
-      sel.classList.add("select-erro");
-    } else {
-      sel.classList.add("select-ok");
-    }
-  });
+document.querySelectorAll(".avaliacao").forEach(s=>{
+  s.onchange=()=>{
+    s.classList.remove("select-ok","select-erro");
+    if(s.value.includes("Não")||s.value.includes("Ruim")||s.value==="Sim"){
+      s.classList.add("select-erro");
+    }else s.classList.add("select-ok");
+  };
 });
 
 /* ASSINATURA */
 const canvas=document.getElementById("assinatura");
 const ctx=canvas.getContext("2d");
 let draw=false;
-
-function pos(e){
+function p(e){
   const r=canvas.getBoundingClientRect();
-  return {
+  return{
     x:(e.touches?e.touches[0].clientX:e.clientX)-r.left,
     y:(e.touches?e.touches[0].clientY:e.clientY)-r.top
   };
 }
-
 canvas.onmousedown=()=>draw=true;
 canvas.onmouseup=()=>draw=false;
 canvas.onmousemove=e=>{
   if(!draw)return;
-  const p=pos(e);
-  ctx.lineTo(p.x,p.y);
-  ctx.stroke();
+  const a=p(e);ctx.lineTo(a.x,a.y);ctx.stroke();
 };
 canvas.ontouchstart=()=>draw=true;
 canvas.ontouchend=()=>draw=false;
 canvas.ontouchmove=e=>{
   e.preventDefault();
   if(!draw)return;
-  const p=pos(e);
-  ctx.lineTo(p.x,p.y);
-  ctx.stroke();
+  const a=p(e);ctx.lineTo(a.x,a.y);ctx.stroke();
 };
-ctx.lineWidth=2;
-ctx.lineCap="round";
-
-function limparAssinatura(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-}
+ctx.lineWidth=2;ctx.lineCap="round";
+function limparAssinatura(){ctx.clearRect(0,0,canvas.width,canvas.height);}
 
 /* VALIDAÇÃO */
 function validar(){
   let ok=true;
-  document.querySelectorAll(".avaliacao").forEach(sel=>{
-    const foto=sel.nextElementSibling;
-    if((sel.value.includes("Não")||sel.value.includes("Ruim")) && foto.files.length===0){
+  document.querySelectorAll(".avaliacao").forEach(s=>{
+    const f=s.nextElementSibling;
+    if((s.classList.contains("select-erro")) && f && f.type==="file" && f.files.length===0){
       ok=false;
     }
   });
-  if(!ok) alert("Itens com problema exigem foto!");
+  if(!ok) alert("❌ Itens com problema exigem foto!");
   return ok;
 }
 
 /* PDF */
 async function gerarPDF(){
-  if(!validar()) return;
-
+  if(!validar())return;
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF();
   let y=15;
@@ -238,26 +295,29 @@ async function gerarPDF(){
   doc.text(dataHora.innerText,10,y);
   y+=10;
 
-  async function item(nome,selectId,fotoId){
-    doc.text(nome+": "+document.getElementById(selectId).value,10,y);
-    y+=5;
-    const file=document.getElementById(fotoId).files[0];
-    if(file){
+  async function item(nome,valor,foto){
+    doc.text(nome+": "+valor,10,y);y+=5;
+    if(foto.files[0]){
       const img=await new Promise(r=>{
         const fr=new FileReader();
         fr.onload=e=>r(e.target.result);
-        fr.readAsDataURL(file);
+        fr.readAsDataURL(foto.files[0]);
       });
       doc.addImage(img,"JPEG",10,y,50,35);
       y+=40;
     }
   }
 
-  await item("Buzina","buzina","fotoBuzina");
-  await item("Pneus","pneus","fotoPneus");
+  await item("Pneus",pneus.value,fotoPneus);
+  await item("Buzina",buzina.value,fotoBuzina);
+  await item("Freios",freios.value,fotoFreios);
+  await item("Elevação",elevacao.value,fotoElevacao);
+  await item("Direção",direcao.value,fotoDirecao);
+  await item("Vazamento",vazamento.value,fotoVazamento);
+  await item("Limpeza",limpeza.value,fotoLimpeza);
+  await item("Gás",gas.value,fotoGas);
 
-  doc.text("Assinatura:",10,y);
-  y+=5;
+  doc.text("Assinatura:",10,y);y+=5;
   doc.addImage(canvas.toDataURL(),"PNG",10,y,60,25);
 
   salvarHistorico();
@@ -268,14 +328,14 @@ async function gerarPDF(){
 /* HISTÓRICO */
 function salvarHistorico(){
   const h=JSON.parse(localStorage.getItem("checklists")||"[]");
-  h.push({colaborador:colaborador.value,data:new Date().toLocaleString()});
+  h.push({nome:colaborador.value,data:new Date().toLocaleString()});
   localStorage.setItem("checklists",JSON.stringify(h));
 }
 
 /* WHATSAPP */
 function enviarWhats(){
-  const msg=encodeURIComponent("Checklist realizado por "+colaborador.value);
-  window.open("https://wa.me/?text="+msg,"_blank");
+  const m=encodeURIComponent("Checklist de empilhadeira realizado por "+colaborador.value);
+  window.open("https://wa.me/?text="+m,"_blank");
 }
 </script>
 </body>
